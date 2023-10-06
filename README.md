@@ -82,3 +82,22 @@ print(is_consequence)
 This code will print `True` to the console, indicating that the formula `Q(a)` is a logical consequence of the axioms.
 
 This algorithm can be used to solve a variety of other logical problems, such as determining whether a formula is tautologous, valid, or satisfiable. You can also use it to develop new logical reasoning algorithms for LLM models.
+
+   **Monte Carlo Logical Inference**
+Problem: Given a set of logical axioms and a logical formula, determine the probability that the formula is a logical consequence of the axioms.
+
+Algorithm:
+
+Initialize a counter c to 0.
+Repeat the following steps n times:
+Generate a random assignment of truth values to the propositional variables in the formula.
+Evaluate the formula under the random assignment.
+If the formula evaluates to True, then increment c.
+Return c / n.
+This algorithm works by randomly sampling truth assignments to the propositional variables in the formula. If the formula evaluates to True under a random assignment, then the algorithm increments the counter c. The probability that the formula is a logical consequence of the axioms is estimated by dividing the number of times the formula evaluates to True by the number of samples.
+
+This algorithm can be used to solve a variety of real-world logic problems, such as:
+
+Determining the probability that a given hypothesis is true, given a set of observations.
+Determining the probability that a given plan will succeed, given a set of constraints.
+Detecting logical fallacies in text.
