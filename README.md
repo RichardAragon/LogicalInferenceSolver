@@ -119,3 +119,11 @@ The algorithm evaluates each explanation using the logical inference algorithm. 
 The algorithm then selects the most likely explanations and creates a new population of explanations by combining them and mutating them. This process is repeated until the algorithm converges or a timeout is reached.
 
 By the end of the algorithm, the population will contain the most likely explanations for why the formula is a logical consequence of the axioms. These explanations can be used to improve the logical reasoning capabilities of LLM models.
+
+**Logical Inference Fine Tuning** 
+
+The compare_meanings() function should compare the predicted meaning to the meaning of the original sentence and return True if the two meanings are consistent, and False otherwise. The update_parameters() function should update the model's parameters to improve its accuracy based on the predicted meaning and the original meaning.
+
+The specific implementation of these two functions will depend on the specific logical inference algorithm that is being used. However, the general approach is to compare the two meanings using some kind of similarity metric, and then to update the model's parameters to increase the similarity between the predicted meaning and the original meaning.
+
+By fine-tuning the model to be more consistent with the meaning of the original sentence, we can improve its accuracy on a variety of tasks.
