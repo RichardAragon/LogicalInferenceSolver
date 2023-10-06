@@ -1,0 +1,46 @@
+import random
+
+class GeneticAlgorithmLogicalInference:
+    def __init__(self, original_axiom_set):
+        self.original_axiom_set = original_axiom_set
+
+    def generate_new_axiom_set(self):
+        new_axiom_set = random.sample(self.original_axiom_set, len(self.original_axiom_set))
+
+        return new_axiom_set
+
+    def evaluate_axiom_set(self, axiom_set, formula):
+        logical_inference = logical_inference.LogicalInference(axiom_set)
+
+        is_logically_equivalent = logical_inference.logical_inference(formula)
+
+        conciseness = 1.0 - len(axiom_set) / len(self.original_axiom_set)
+
+        # Average complexity of the axiom set.
+        average_complexity = 0.0
+
+        for axiom in axiom_set:
+            # Compute the complexity of the axiom.
+            complexity = 0.0
+
+            # TODO: Implement a complexity metric for logical formulas.
+
+            average_complexity += complexity
+
+        average_complexity /= len(axiom_set)
+
+        understandability = 1.0 - average_complexity
+
+        fitness = (is_logically_equivalent * 0.5 + conciseness * 0.25 + understandability * 0.25)
+
+        return fitness
+
+    def generate_new_population(self, population):
+        new_population = []
+
+        for i in range(len(population)):
+            parent1 = random.choice(population)
+            parent2 = random.choice(population)
+
+            child_axiom_set = self.crossover(parent1, parent2)
+            child_axiom_set = self.mutate(child
