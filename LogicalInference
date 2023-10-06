@@ -1,0 +1,51 @@
+import logical_inference
+
+class LogicalInferenceSolver:
+    def __init__(self, domain_of_discourse):
+        self.logical_inference = logical_inference.LogicalInference(domain_of_discourse)
+
+    def solve(self, axioms, formula):
+        queue = [formula]
+
+        while queue:
+            formula = queue.pop(0)
+
+            if isinstance(formula, logical_inference.LogicalAxiom):
+                return True
+
+            if isinstance(formula, logical_inference.LogicalContradiction):
+                return False
+
+            if isinstance(formula, logical_inference.LogicalImplication):
+                queue.append(formula.antecedent)
+                queue.append(logical_inference.LogicalNegation(formula.consequent))
+
+            if isinstance(formula, logical_inference.LogicalUniversalQuantifier):
+                for value in self.logical_inference.domain_of_discourse:
+                    quantifier_body = formula.quantifier_body.substitute(value)
+                    queue.append(quantifier_body)
+
+            if isinstance(formula, logical_inference.LogicalExistentialQuantifier):
+                for value in self.logical_inference.domain_of_discourse:
+                    quantifier_body = formula.quantifier_body.substitute(value)
+
+                    if self.logical_inference.logical_inference(quantifier_body):
+                        return True
+
+        return False
+
+# Example usage:
+
+solver = LogicalInferenceSolver({"a", "b", "c"})
+
+axioms = [
+    logical_inference.LogicalFormula("P(a)"),
+    logical_inference.LogicalFormula("P(b)"),
+    logical_inference.LogicalFormula("∀x (P(x) → Q(x))"),
+]
+
+formula = logical_inference.LogicalFormula("Q(a)")
+
+is_consequence = solver.solve(axioms, formula)
+
+print(is_consequence)
