@@ -1,0 +1,69 @@
+import random
+
+class MonteCarloLogicalInference:
+    def __init__(self, domain_of_discourse):
+        self.domain_of_discourse = domain_of_discourse
+
+    def solve(self, axioms, formula, n):
+        c = 0
+
+        for i in range(n):
+            truth_values = {}
+
+            for variable in self.domain_of_discourse:
+                truth_values[variable] = random.choice([True, False])
+
+            if self.evaluate(formula, truth_values):
+                c += 1
+
+        return c / n
+
+    def evaluate(self, formula, truth_values):
+        if isinstance(formula, logical_inference.LogicalAxiom):
+            return True
+
+        if isinstance(formula, logical_inference.LogicalContradiction):
+            return False
+
+        if isinstance(formula, logical_inference.LogicalImplication):
+            antecedent = self.evaluate(formula.antecedent, truth_values)
+            consequent = self.evaluate(formula.consequent, truth_values)
+
+            return (antecedent and not consequent) or not antecedent
+
+        if isinstance(formula, logical_inference.LogicalUniversalQuantifier):
+            for value in self.domain_of_discourse:
+                quantifier_body = formula.quantifier_body.substitute(value)
+
+                if not self.evaluate(quantifier_body, truth_values):
+                    return False
+
+            return True
+
+        if isinstance(formula, logical_inference.LogicalExistentialQuantifier):
+            for value in self.domain_of_discourse:
+                quantifier_body = formula.quantifier_body.substitute(value)
+
+                if self.evaluate(quantifier_body, truth_values):
+                    return True
+
+            return False
+
+        else:
+            raise Exception("Invalid logical formula")
+
+# Example usage:
+
+solver = MonteCarloLogicalInference({"a", "b", "c"})
+
+axioms = [
+    logical_inference.LogicalFormula("P(a)"),
+    logical_inference.LogicalFormula("P(b)"),
+    logical_inference.LogicalFormula("∀x (P(x) → Q(x))"),
+]
+
+formula = logical_inference.LogicalFormula("Q(a)")
+
+probability = solver.solve(axioms, formula, 10000)
+
+print(probability)
