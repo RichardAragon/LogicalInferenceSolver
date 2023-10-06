@@ -101,3 +101,21 @@ This algorithm can be used to solve a variety of real-world logic problems, such
 Determining the probability that a given hypothesis is true, given a set of observations.
 Determining the probability that a given plan will succeed, given a set of constraints.
 Detecting logical fallacies in text.
+
+**Genetic Logical Inference**
+
+Problem: Given a set of logical axioms and a logical formula, determine the most likely explanation of why the formula is a logical consequence of the axioms.
+
+Algorithm:
+
+Initialize a population of random explanations.
+Evaluate each explanation using the logical inference algorithm.
+Select the most likely explanations and create a new population of explanations by combining them and mutating them.
+Repeat steps 2 and 3 until the algorithm converges or a timeout is reached.
+The algorithm works by maintaining a population of possible explanations for why the formula is a logical consequence of the axioms. Each explanation is a sequence of logical steps that can be used to derive the formula from the axioms.
+
+The algorithm evaluates each explanation using the logical inference algorithm. If the explanation is valid, then the algorithm assigns it a high fitness score. If the explanation is not valid, then the algorithm assigns it a low fitness score.
+
+The algorithm then selects the most likely explanations and creates a new population of explanations by combining them and mutating them. This process is repeated until the algorithm converges or a timeout is reached.
+
+By the end of the algorithm, the population will contain the most likely explanations for why the formula is a logical consequence of the axioms. These explanations can be used to improve the logical reasoning capabilities of LLM models.
