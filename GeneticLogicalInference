@@ -1,0 +1,72 @@
+import random
+
+class GeneticAlgorithmLogicalInference:
+    def __init__(self, domain_of_discourse):
+        self.domain_of_discourse = domain_of_discourse
+        self.logical_inference = logical_inference.LogicalInference(domain_of_discourse)
+
+    def solve(self, axioms, formula, population_size, generations):
+        population = []
+
+        for i in range(population_size):
+            explanation = []
+
+            for axiom in axioms:
+                explanation.append(axiom)
+
+                if self.logical_inference.logical_inference(logical_inference.LogicalImplication(explanation, formula)):
+                    break
+
+            population.append(explanation)
+
+        for i in range(generations):
+            new_population = []
+
+            while len(new_population) < population_size:
+                parent_1 = random.choice(population)
+                parent_2 = random.choice(population)
+
+                child = []
+
+                for i in range(len(parent_1)):
+                    if random.random() < 0.5:
+                        child.append(parent_1[i])
+                    else:
+                        child.append(parent_2[i])
+
+                child = self.mutate(child)
+
+                new_population.append(child)
+
+            population = new_population
+
+        best_explanation = population[0]
+
+        for explanation in population:
+            if self.logical_inference.logical_inference(logical_inference.LogicalImplication(explanation, formula)) and len(explanation) < len(best_explanation):
+                best_explanation = explanation
+
+        return best_explanation
+
+    def mutate(self, explanation):
+        if random.random() < 0.1:
+            index = random.randint(0, len(explanation) - 1)
+            explanation[index] = random.choice(self.logical_inference.logical_axioms)
+
+        return explanation
+
+# Example usage:
+
+solver = GeneticAlgorithmLogicalInference({"a", "b", "c"})
+
+axioms = [
+    logical_inference.LogicalFormula("P(a)"),
+    logical_inference.LogicalFormula("P(b)"),
+    logical_inference.LogicalFormula("∀x (P(x) → Q(x))"),
+]
+
+formula = logical_inference.LogicalFormula("Q(a)")
+
+explanation = solver.solve(axioms, formula, 100, 100)
+
+print(explanation)
