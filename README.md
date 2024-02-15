@@ -1,4 +1,5 @@
-# LogicalInferenceSolver
+#PFAF Decoder: LogicalInferenceSolver
+*Logivsl Inference Solver is currently NOT licensed for Commercial Use. 
 **Problem:** Given a set of logical axioms and a logical formula, determine whether the formula is a logical consequence of the axioms.
 
 **Algorithm:**
